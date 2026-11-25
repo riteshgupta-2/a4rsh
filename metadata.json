@@ -1,0 +1,8 @@
+{
+  "name": "RoboCode Lab",
+  "description": "Free interactive robotics practical workbench, component simulator, visual block coding, and multi-language computer programming academy for kids on Android, iOS, and Windows.",
+  "requestFramePermissions": [],
+  "majorCapabilities": [
+    "MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"
+  ]
+}

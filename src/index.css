@@ -1,0 +1,229 @@
+@import "tailwindcss";
+
+@layer base {
+  :root {
+    --font-display: 'Outfit', 'Plus Jakarta Sans', system-ui, sans-serif;
+    --font-sans: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
+    --font-mono: 'IBM Plex Mono', ui-monospace, SFMono-Regular, Menlo, monospace;
+    --scroll-y: 0px;
+    --scroll-progress: 0;
+  }
+
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    font-family: var(--font-sans);
+    background-color: #edf4fc;
+    background-image:
+      radial-gradient(at 15% 15%, rgba(56, 189, 248, 0.14) 0px, transparent 50%),
+      radial-gradient(at 85% 20%, rgba(129, 140, 248, 0.12) 0px, transparent 48%),
+      radial-gradient(at 75% 85%, rgba(52, 211, 153, 0.12) 0px, transparent 52%);
+    background-attachment: fixed;
+    color: #0f172a;
+    overflow-x: hidden;
+  }
+
+  h1, h2, h3, .font-display {
+    font-family: var(--font-display);
+  }
+
+  code, pre, .font-mono {
+    font-family: var(--font-mono);
+  }
+}
+
+.tabular-nums {
+  font-variant-numeric: tabular-nums;
+}
+
+@keyframes wireFlow {
+  to {
+    stroke-dashoffset: -24;
+  }
+}
+
+.animate-wire-flow {
+  stroke-dasharray: 6 6;
+  animation: wireFlow 0.7s linear infinite;
+}
+
+/* Moving Ambient Colour Blur Orbs */
+@keyframes auroraDriftA {
+  0% {
+    transform: translate3d(-6%, -4%, 0) scale(1);
+  }
+  50% {
+    transform: translate3d(14%, 10%, 0) scale(1.12);
+  }
+  100% {
+    transform: translate3d(-2%, 16%, 0) scale(0.96);
+  }
+}
+
+@keyframes auroraDriftB {
+  0% {
+    transform: translate3d(6%, -6%, 0) scale(1.04);
+  }
+  50% {
+    transform: translate3d(-14%, 12%, 0) scale(0.92);
+  }
+  100% {
+    transform: translate3d(4%, 18%, 0) scale(1.1);
+  }
+}
+
+@keyframes auroraDriftC {
+  0% {
+    transform: translate3d(0%, 8%, 0) scale(0.95);
+  }
+  50% {
+    transform: translate3d(-12%, -10%, 0) scale(1.12);
+  }
+  100% {
+    transform: translate3d(12%, -4%, 0) scale(1);
+  }
+}
+
+@keyframes auroraDriftD {
+  0% {
+    transform: translate3d(-8%, 4%, 0) scale(1.05);
+  }
+  50% {
+    transform: translate3d(10%, -12%, 0) scale(0.94);
+  }
+  100% {
+    transform: translate3d(-4%, -6%, 0) scale(1.08);
+  }
+}
+
+.aurora-orb-a {
+  animation: auroraDriftA 18s ease-in-out infinite alternate;
+  will-change: transform;
+}
+
+.aurora-orb-b {
+  animation: auroraDriftB 22s ease-in-out infinite alternate;
+  will-change: transform;
+}
+
+.aurora-orb-c {
+  animation: auroraDriftC 24s ease-in-out infinite alternate;
+  will-change: transform;
+}
+
+.aurora-orb-d {
+  animation: auroraDriftD 20s ease-in-out infinite alternate;
+  will-change: transform;
+}
+
+/* Scroll-linked Hero Depth & Ambient Parallax */
+.scroll-parallax-hero {
+  transform: translate3d(0, calc(var(--scroll-y, 0px) * -0.04), 0);
+  will-change: transform;
+}
+
+.scroll-parallax-bg {
+  transform: translate3d(0, calc(var(--scroll-y, 0px) * -0.07), 0);
+  will-change: transform;
+}
+
+.scroll-progress-bar {
+  transform: scaleX(var(--scroll-progress, 0));
+  transform-origin: left center;
+  will-change: transform;
+}
+
+/* Smooth Scroll Reveal Cards */
+.scroll-reveal-card {
+  opacity: 0;
+  transform: translate3d(0, 26px, 0) scale(0.98);
+  transition:
+    opacity 0.65s cubic-bezier(0.16, 1, 0.3, 1),
+    transform 0.65s cubic-bezier(0.16, 1, 0.3, 1);
+  will-change: opacity, transform;
+}
+
+.scroll-reveal-card[data-revealed="true"] {
+  opacity: 1;
+  transform: translate3d(0, 0, 0) scale(1);
+}
+
+/* Waving Humanoid Robot Mascot Animations */
+@keyframes robotWave {
+  0%, 100% {
+    transform: rotate(-10deg);
+  }
+  25% {
+    transform: rotate(22deg);
+  }
+  50% {
+    transform: rotate(-14deg);
+  }
+  75% {
+    transform: rotate(20deg);
+  }
+}
+
+@keyframes robotFloat {
+  0%, 100% {
+    transform: translate3d(0, 0px, 0);
+  }
+  50% {
+    transform: translate3d(0, -4px, 0);
+  }
+}
+
+@keyframes robotBlink {
+  0%, 92%, 100% {
+    transform: scaleY(1);
+  }
+  96% {
+    transform: scaleY(0.15);
+  }
+}
+
+.robot-wave-arm {
+  transform-box: fill-box;
+  transform-origin: 20% 80%;
+  animation: robotWave 1.6s ease-in-out infinite;
+}
+
+.robot-float-body {
+  animation: robotFloat 3.2s ease-in-out infinite;
+}
+
+.robot-eye-blink {
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: robotBlink 4.5s ease-in-out infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  .animate-wire-flow,
+  .aurora-orb-a,
+  .aurora-orb-b,
+  .aurora-orb-c,
+  .aurora-orb-d,
+  .robot-wave-arm,
+  .robot-float-body,
+  .robot-eye-blink {
+    animation: none;
+  }
+
+  .scroll-parallax-hero,
+  .scroll-parallax-bg {
+    transform: none;
+  }
+
+  .scroll-reveal-card {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+}

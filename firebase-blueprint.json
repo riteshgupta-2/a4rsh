@@ -1,0 +1,134 @@
+{
+  "entities": {
+    "UserProgressProfile": {
+      "title": "User Progress Profile",
+      "description": "Public-safe student robotics workspace state, avatar preferences, XP, and coding blocks owned by an authenticated user.",
+      "type": "object",
+      "properties": {
+        "uid": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 128,
+          "pattern": "^[a-zA-Z0-9_\\-]+$",
+          "description": "Firebase Auth UID of the owning account."
+        },
+        "username": {
+          "type": "string",
+          "minLength": 2,
+          "maxLength": 24,
+          "description": "Display username shown in the student workspace."
+        },
+        "avatarIcon": {
+          "type": "string",
+          "enum": ["bot", "cpu", "rocket", "compass", "code"],
+          "maxLength": 16,
+          "description": "Selected profile avatar icon identifier."
+        },
+        "avatarTheme": {
+          "type": "string",
+          "enum": ["sky", "emerald", "amber", "violet", "rose"],
+          "maxLength": 16,
+          "description": "Selected profile badge color theme."
+        },
+        "xp": {
+          "type": "integer",
+          "description": "Accumulated educational XP points."
+        },
+        "completedPracticals": {
+          "type": "array",
+          "description": "List of completed robotics practical IDs."
+        },
+        "completedLessons": {
+          "type": "array",
+          "description": "List of completed coding lesson IDs."
+        },
+        "blocks": {
+          "type": "array",
+          "description": "Visual coding blocks saved in the user workspace."
+        },
+        "createdAt": {
+          "type": "string",
+          "format": "date-time",
+          "description": "Server creation timestamp."
+        },
+        "updatedAt": {
+          "type": "string",
+          "format": "date-time",
+          "description": "Server last-updated timestamp."
+        }
+      },
+      "required": [
+        "uid",
+        "username",
+        "avatarIcon",
+        "avatarTheme",
+        "xp",
+        "completedPracticals",
+        "completedLessons",
+        "blocks",
+        "createdAt",
+        "updatedAt"
+      ]
+    },
+    "UserPrivateAccount": {
+      "title": "User Private Account",
+      "description": "Isolated PII account metadata (email, phone number, auth provider) strictly restricted to the owning user.",
+      "type": "object",
+      "properties": {
+        "uid": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 128,
+          "pattern": "^[a-zA-Z0-9_\\-]+$",
+          "description": "Firebase Auth UID of the owning account."
+        },
+        "authProvider": {
+          "type": "string",
+          "enum": ["email", "phone", "apple", "google"],
+          "maxLength": 16,
+          "description": "Primary authentication provider used for the account."
+        },
+        "email": {
+          "type": "string",
+          "maxLength": 254,
+          "description": "Optional verified or registered email address."
+        },
+        "phoneNumber": {
+          "type": "string",
+          "maxLength": 32,
+          "description": "Optional E.164 verified phone number."
+        },
+        "createdAt": {
+          "type": "string",
+          "format": "date-time",
+          "description": "Server creation timestamp."
+        },
+        "updatedAt": {
+          "type": "string",
+          "format": "date-time",
+          "description": "Server last-updated timestamp."
+        }
+      },
+      "required": [
+        "uid",
+        "authProvider",
+        "createdAt",
+        "updatedAt"
+      ]
+    }
+  },
+  "firestore": {
+    "/users/{userId}": {
+      "schema": {
+        "$ref": "#/entities/UserProgressProfile"
+      },
+      "description": "Stores each authenticated user's non-PII robotics progress, username, avatar customization, and coding blocks."
+    },
+    "/users/{userId}/private/{docId}": {
+      "schema": {
+        "$ref": "#/entities/UserPrivateAccount"
+      },
+      "description": "Isolated private PII metadata document (`account`) accessible strictly by the owning authenticated user."
+    }
+  }
+}
